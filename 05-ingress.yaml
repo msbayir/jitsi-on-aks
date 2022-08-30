@@ -1,0 +1,24 @@
+ apiVersion: networking.k8s.io/v1
+ kind: Ingress
+ metadata:
+   name: jitsi
+   namespace: jitsi
+   annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+ spec:
+  tls:
+  - hosts:
+    - <CUSTOM_DOMAIN>
+    secretName: tls-secret
+  rules:
+    - host: <CUSTOM_DOMAIN>
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 80
